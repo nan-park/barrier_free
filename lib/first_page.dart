@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirstPage extends StatefulWidget {
   @override
   State<FirstPage> createState() => _FirstPageState();
+}
+
+// 채팅 스트림
+Stream getDataStream() async* {
+  Stream<DocumentSnapshot<Map<String, dynamic>>> snapshot =
+      FirebaseFirestore.instance.collection("LiveStreamData").doc("data").snapshots();
+  yield* snapshot;
 }
 
 class _FirstPageState extends State<FirstPage> {
@@ -24,51 +32,62 @@ class _FirstPageState extends State<FirstPage> {
         child: Scaffold(
           backgroundColor: Colors.black,
           body: Container(
-              child: Column(
-            children: [
-              Spacer(flex: 1),
-              // 음악 설명(music)
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Text(music, style: TextStyle(fontSize: 25, color: Colors.white))]),
-                  )),
-              // 소리 설명(effect)
-              Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [Text(effect, style: TextStyle(fontSize: 25, color: Colors.white))],
-                    ),
-                  )),
-              // 대사/가사(dialogue)
-              Expanded(
-                  flex: 3,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              Text(
-                                dialogue,
-                                style: TextStyle(fontSize: 25, color: colorDialogue, height: 1.4, letterSpacing: 1.0),
-                                textAlign: TextAlign.center,
-                              )
-                            ]),
-                          ],
-                        )
-                      ],
-                    ),
-                  )),
-              Spacer(flex: 1),
-            ],
-          )),
+              child: StreamBuilder(
+                  stream: getDataStream(),
+                  builder: (context, AsyncSnapshot streamSnapshot) {
+                    if (streamSnapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: Text("로딩중...", style: TextStyle(fontSize: 25, color: Colors.white)));
+                    } else {
+                      List snapshotList = streamSnapshot.data;
+                      print(snapshotList);
+                      return Column(
+                        children: [
+                          Spacer(flex: 1),
+                          // 음악 설명(music)
+                          Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [Text(music, style: TextStyle(fontSize: 25, color: Colors.white))]),
+                              )),
+                          // 소리 설명(effect)
+                          Expanded(
+                              flex: 1,
+                              child: Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [Text(effect, style: TextStyle(fontSize: 25, color: Colors.white))],
+                                ),
+                              )),
+                          // 대사/가사(dialogue)
+                          Expanded(
+                              flex: 3,
+                              child: Container(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Row(children: [
+                                          Text(
+                                            dialogue,
+                                            style: TextStyle(
+                                                fontSize: 25, color: colorDialogue, height: 1.4, letterSpacing: 1.0),
+                                            textAlign: TextAlign.center,
+                                          )
+                                        ]),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              )),
+                          Spacer(flex: 1),
+                        ],
+                      );
+                    }
+                  })),
         ),
       ),
     );
