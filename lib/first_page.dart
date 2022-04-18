@@ -20,10 +20,6 @@ class _FirstPageState extends State<FirstPage> {
     //가로 고정
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
-    //변수들(이따 build 위로 옮기기)
-    String music = "♬ 잔잔한 음악";
-    String effect = "[지직거리는 레코드 소리]";
-    String dialogue = "(재즈싱어) 우린 우린 왜 사랑했을까\n테스트1\n테스트2";
     Color colorDialogue = Colors.blueAccent;
 
     return MaterialApp(
@@ -39,6 +35,15 @@ class _FirstPageState extends State<FirstPage> {
                       return Center(child: Text("로딩중...", style: TextStyle(fontSize: 25, color: Colors.white)));
                     } else {
                       //Map snapshotList = streamSnapshot.data.docs;
+                      if (streamSnapshot.data["color"] == "") {
+                        colorDialogue = Colors.white;
+                      } else if (streamSnapshot.data["color"] == "r") {
+                        colorDialogue = Color.fromARGB(255, 234, 209, 220);
+                      } else if (streamSnapshot.data["color"] == "g") {
+                        colorDialogue = Color.fromARGB(255, 217, 234, 211);
+                      } else if (streamSnapshot.data["color"] == "b") {
+                        colorDialogue = Color.fromARGB(255, 201, 218, 248);
+                      }
                       return Column(
                         children: [
                           Spacer(flex: 1),
