@@ -18,7 +18,7 @@ class _FirstPageState extends State<FirstPage> {
   @override
   Widget build(BuildContext context) {
     //가로 고정
-    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     //변수들(이따 build 위로 옮기기)
     String music = "♬ 잔잔한 음악";
