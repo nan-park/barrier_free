@@ -38,8 +38,7 @@ class _FirstPageState extends State<FirstPage> {
                     if (streamSnapshot.connectionState == ConnectionState.waiting) {
                       return Center(child: Text("로딩중...", style: TextStyle(fontSize: 25, color: Colors.white)));
                     } else {
-                      List snapshotList = streamSnapshot.data;
-                      print(snapshotList);
+                      //Map snapshotList = streamSnapshot.data.docs;
                       return Column(
                         children: [
                           Spacer(flex: 1),
@@ -47,9 +46,10 @@ class _FirstPageState extends State<FirstPage> {
                           Expanded(
                               flex: 1,
                               child: Container(
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [Text(music, style: TextStyle(fontSize: 25, color: Colors.white))]),
+                                child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                                  Text(streamSnapshot.data["music"],
+                                      style: TextStyle(fontSize: 25, color: Colors.white))
+                                ]),
                               )),
                           // 소리 설명(effect)
                           Expanded(
@@ -57,7 +57,10 @@ class _FirstPageState extends State<FirstPage> {
                               child: Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [Text(effect, style: TextStyle(fontSize: 25, color: Colors.white))],
+                                  children: [
+                                    Text(streamSnapshot.data["effect"],
+                                        style: TextStyle(fontSize: 25, color: Colors.white))
+                                  ],
                                 ),
                               )),
                           // 대사/가사(dialogue)
@@ -72,7 +75,7 @@ class _FirstPageState extends State<FirstPage> {
                                       children: [
                                         Row(children: [
                                           Text(
-                                            dialogue,
+                                            streamSnapshot.data["dialogue"],
                                             style: TextStyle(
                                                 fontSize: 25, color: colorDialogue, height: 1.4, letterSpacing: 1.0),
                                             textAlign: TextAlign.center,
