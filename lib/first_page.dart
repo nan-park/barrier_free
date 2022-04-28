@@ -21,6 +21,8 @@ class _FirstPageState extends State<FirstPage> {
     SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
 
     Color colorDialogue = Colors.blueAccent;
+    List<Color> colorList = [];
+    Color colorD;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -35,15 +37,39 @@ class _FirstPageState extends State<FirstPage> {
                       return Center(child: Text("로딩중...", style: TextStyle(fontSize: 25, color: Colors.white)));
                     } else {
                       //Map snapshotList = streamSnapshot.data.docs;
-                      if (streamSnapshot.data["color"] == "") {
-                        colorDialogue = Colors.white;
-                      } else if (streamSnapshot.data["color"] == "r") {
-                        colorDialogue = Color.fromARGB(255, 234, 209, 220);
-                      } else if (streamSnapshot.data["color"] == "g") {
-                        colorDialogue = Color.fromARGB(255, 217, 234, 211);
-                      } else if (streamSnapshot.data["color"] == "b") {
-                        colorDialogue = Color.fromARGB(255, 201, 218, 248);
+                      String colorString = streamSnapshot.data["color"];
+                      colorD = Colors.white;
+                      for (int i = 0; i < 3; i++) {//rg
+                        if (i < colorString.length) {
+                          if (colorString[i] == "r") {
+                            colorD = Color.fromARGB(255, 234, 209, 220);
+                          } else if (colorString[i] == "g") {
+                            colorD = Color.fromARGB(255, 217, 234, 211);
+                          } else if (colorString[i] == "b") {
+                            colorD = Color.fromARGB(255, 201, 218, 248);
+                          } else if (colorString[i] == "w") {
+                            colorD = Colors.white;
+                          }
+                        }
+                        colorList.add(colorD);
                       }
+                      // ColorString = "rg";
+                      // colorList = [Colors.red, Colors.green, Colors.green];
+                      // String dialogueEx = "올리버)안녕안녕\n클레어)호이호이\n제임스)헬로헬로";
+                      // List dialogueList = dialogueEx.split("\n");
+                      List dialogueList = streamSnapshot.data["dialogue"].split("\n"); // 개수 1~3개
+
+                      // if (streamSnapshot.data["color"] == "") {
+                      //   colorDialogue = Colors.white;
+                      // } else if (streamSnapshot.data["color"] == "r") {
+                      //   colorDialogue = Color.fromARGB(255, 234, 209, 220);
+                      // } else if (streamSnapshot.data["color"] == "g") {
+                      //   colorDialogue = Color.fromARGB(255, 217, 234, 211);
+                      // } else if (streamSnapshot.data["color"] == "b") {
+                      //   colorDialogue = Color.fromARGB(255, 201, 218, 248);
+                      // }
+                      
+                      
                       return Column(
                         children: [
                           Spacer(flex: 1),
@@ -79,11 +105,19 @@ class _FirstPageState extends State<FirstPage> {
                                       mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         Row(children: [
-                                          Text(
-                                            streamSnapshot.data["dialogue"],
-                                            style: TextStyle(
-                                                fontSize: 25, color: colorDialogue, height: 1.4, letterSpacing: 1.0),
-                                            textAlign: TextAlign.center,
+                                          Column(
+                                            children: [
+                                              for (int i = 0; i < dialogueList.length; i++)
+                                                (Text(
+                                                  dialogueList[i],
+                                                  style: TextStyle(
+                                                      fontSize: 25,
+                                                      color: colorList[i],
+                                                      height: 1.4,
+                                                      letterSpacing: 1.0),
+                                                  textAlign: TextAlign.center,
+                                                ))
+                                            ],
                                           )
                                         ]),
                                       ],
