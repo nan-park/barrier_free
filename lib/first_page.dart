@@ -37,22 +37,26 @@ class _FirstPageState extends State<FirstPage> {
                       return Center(child: Text("로딩중...", style: TextStyle(fontSize: 25, color: Colors.white)));
                     } else {
                       //Map snapshotList = streamSnapshot.data.docs;
+                      colorList = [];
                       String colorString = streamSnapshot.data["color"];
                       colorD = Colors.white;
-                      for (int i = 0; i < 3; i++) {//rg
+                      for (int i = 0; i < 5; i = i + 2) {
+                        //rg
+                        print(colorString.length);
                         if (i < colorString.length) {
                           if (colorString[i] == "r") {
-                            colorD = Color.fromARGB(255, 234, 209, 220);
+                            colorD = Color.fromARGB(255, 243, 203, 204);
                           } else if (colorString[i] == "g") {
-                            colorD = Color.fromARGB(255, 217, 234, 211);
+                            colorD = Color.fromARGB(255, 167, 200, 157);
                           } else if (colorString[i] == "b") {
-                            colorD = Color.fromARGB(255, 201, 218, 248);
+                            colorD = Color.fromARGB(255, 160, 192, 242);
                           } else if (colorString[i] == "w") {
                             colorD = Colors.white;
                           }
                         }
                         colorList.add(colorD);
                       }
+                      print(colorList);
                       // ColorString = "rg";
                       // colorList = [Colors.red, Colors.green, Colors.green];
                       // String dialogueEx = "올리버)안녕안녕\n클레어)호이호이\n제임스)헬로헬로";
@@ -68,8 +72,7 @@ class _FirstPageState extends State<FirstPage> {
                       // } else if (streamSnapshot.data["color"] == "b") {
                       //   colorDialogue = Color.fromARGB(255, 201, 218, 248);
                       // }
-                      
-                      
+
                       return Column(
                         children: [
                           Spacer(flex: 1),
@@ -79,7 +82,11 @@ class _FirstPageState extends State<FirstPage> {
                               child: Container(
                                 child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                                   Text(streamSnapshot.data["music"],
-                                      style: TextStyle(fontSize: 25, color: Colors.white))
+                                      style: TextStyle(
+                                        fontSize: 25,
+                                        color: Colors.white,
+                                        fontFamily: "RIDIBatang",
+                                      ))
                                 ]),
                               )),
                           // 소리 설명(effect)
@@ -90,7 +97,11 @@ class _FirstPageState extends State<FirstPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(streamSnapshot.data["effect"],
-                                        style: TextStyle(fontSize: 25, color: Colors.white))
+                                        style: TextStyle(
+                                          fontSize: 25,
+                                          color: Colors.white,
+                                          fontFamily: "RIDIBatang",
+                                        ))
                                   ],
                                 ),
                               )),
@@ -111,6 +122,7 @@ class _FirstPageState extends State<FirstPage> {
                                                 (Text(
                                                   dialogueList[i],
                                                   style: TextStyle(
+                                                      fontFamily: "RIDIBatang",
                                                       fontSize: 25,
                                                       color: colorList[i],
                                                       height: 1.4,
