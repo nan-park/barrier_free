@@ -44,11 +44,11 @@ class _FirstPageState extends State<FirstPage> {
                     // print(colorString.length);
                     if (i < colorString.length) {
                       if (colorString[i] == "r") {
-                        colorD = const Color.fromARGB(255, 243, 203, 204);
+                        colorD = const Color.fromARGB(255, 255, 100, 50);
                       } else if (colorString[i] == "g") {
-                        colorD = const Color.fromARGB(255, 167, 200, 157);
+                        colorD = const Color.fromARGB(255, 40, 220, 50);
                       } else if (colorString[i] == "b") {
-                        colorD = const Color.fromARGB(255, 160, 192, 242);
+                        colorD = const Color.fromARGB(255, 50, 110, 242);
                       } else if (colorString[i] == "w") {
                         colorD = Colors.white;
                       } else if (colorString[i] == "y") {
@@ -85,7 +85,7 @@ class _FirstPageState extends State<FirstPage> {
                           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                             Text(streamSnapshot.data["music"],
                                 style: const TextStyle(
-                                  fontSize: 25,
+                                  fontSize: 27,
                                   color: Colors.white,
                                   fontFamily: "RIDIBatang",
                                 ))
@@ -98,7 +98,7 @@ class _FirstPageState extends State<FirstPage> {
                             children: [
                               Text(streamSnapshot.data["effect"],
                                   style: const TextStyle(
-                                    fontSize: 25,
+                                    fontSize: 27,
                                     color: Colors.white,
                                     fontFamily: "RIDIBatang",
                                   ))
@@ -121,7 +121,7 @@ class _FirstPageState extends State<FirstPage> {
                                             dialogueList[i],
                                             style: TextStyle(
                                                 fontFamily: "RIDIBatang",
-                                                fontSize: 25,
+                                                fontSize: 27,
                                                 color: colorList[i],
                                                 height: 1.4,
                                                 letterSpacing: 1.0),
